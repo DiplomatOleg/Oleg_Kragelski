@@ -1,0 +1,20 @@
+numbers = random.sample(range(1, 101), 10)
+
+
+print("Список в обратном порядке:")
+for number in reversed(numbers):
+    print(number, end=" ")
+
+reversed_numbers = list(reversed(numbers))
+
+
+print("\nПересобранный список:", reversed_numbers)
+
+
+print("Числа и их четность:")
+index = 0
+while index < len(reversed_numbers):
+    number = reversed_numbers[index]
+    parity = "четное" if number % 2 == 0 else "нечетное"
+    print(f"{number} - {parity}")
+    index += 1
