@@ -18,3 +18,5 @@ while index < len(reversed_numbers):
     parity = "четное" if number % 2 == 0 else "нечетное"
     print(f"{number} - {parity}")
     index += 1
+
+
