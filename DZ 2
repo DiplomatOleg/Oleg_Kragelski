@@ -1,0 +1,42 @@
+import pandas as pd
+
+class DataGenerator:
+    def __init__(self, num_columns=3, num_rows=10, centers=None):
+        self.num_columns = num_columns
+        self.num_rows = num_rows
+        self.centers = centers if centers else [[0] * num_columns] 
+        self.functions = [[lambda x: random.gauss(center[i], 1) for i in range(num_columns)] for center in self.centers]
+    
+    def set_centers(self, centers):
+        self.centers = centers
+        self.functions = [[lambda x: random.gauss(center[i], 1) for i in range(self.num_columns)] for center in self.centers]
+    
+    def generate_data(self):
+        data = []
+        for cluster_functions in self.functions:
+            cluster_data = []
+            for _ in range(self.num_rows):
+                row = [func(None) for func in cluster_functions]
+                cluster_data.append(row)
+            data.append(cluster_data)
+        return data
+
+
+generator = DataGenerator(num_columns=2, num_rows=5, centers=[[33, 180], [27, 170]])
+
+
+cluster_data = generator.generate_data()
+
+
+columns = ['Возраст', 'Рост']
+clusters = ['Мужчины', 'Женщины']
+dfs = []
+
+for i, cluster_name in enumerate(clusters):
+    cluster_df = pd.DataFrame(cluster_data[i], columns=columns)
+    cluster_df['Пол'] = cluster_name
+    dfs.append(cluster_df)
+
+
+final_df = pd.concat(dfs, ignore_index=True)
+print(final_df)
